@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SEC Financial & Sentiment Analyzer | FY2016–FY2025</title>
+  <link rel="stylesheet" href="css/style.css">
+  <!-- Chart.js CDN with fallback handling -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+</head>
+<body>
+
+  <!-- Top Application Header -->
+  <header class="app-header">
+    <div class="header-top">
+      <div class="brand-wrapper">
+        <div class="brand-icon">SEC</div>
+        <div>
+          <div class="brand-title">SEC Financial & Sentiment Analyzer</div>
+          <div class="brand-subtitle">Interactive 10-Year EDGAR Analytics & MD&A Sentiment Platform (FY2016–FY2025)</div>
+        </div>
+      </div>
+
+      <!-- Company Switcher -->
+      <div class="company-switcher">
+        <button class="company-btn active" data-company="AAPL">
+          <span>🍏</span> Apple (AAPL)
+        </button>
+        <button class="company-btn" data-company="AMD">
+          <span>⚡</span> AMD (AMD)
+        </button>
+        <button class="company-btn custom-company-btn" data-company="CUSTOM" id="btn-custom-company">
+          <span>🏢</span> <span id="custom-company-label">Microsoft (MSFT)</span>
+        </button>
+        <button class="company-btn" data-company="COMP" id="btn-comp-mode">
+          <span>⚖️</span> <span id="comp-btn-label">Three-Company Comparison</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Navigation Bar -->
+    <nav class="nav-bar">
+      <a href="#overview" class="nav-link active" data-tab="overview">📊 Executive Overview</a>
+      <a href="#financials" class="nav-link" data-tab="financials">📑 Financial Statements</a>
+      <a href="#ratios" class="nav-link" data-tab="ratios">📈 Financial Ratios</a>
+      <a href="#sentiment" class="nav-link" data-tab="sentiment">💬 MD&A Sentiment</a>
+      <a href="#price-sentiment" class="nav-link" data-tab="price-sentiment">📉 Stock Price vs. Sentiment</a>
+      <a href="#aapl-amd" class="nav-link" data-tab="aapl-amd">🍏⚡ Apple vs. AMD</a>
+      <a href="#cross-company" class="nav-link" data-tab="cross-company">⚖️ Three-Company Analytics</a>
+      <a href="#add-company" class="nav-link highlight-link" data-tab="add-company">🏢 Peer Benchmark (MSFT)</a>
+      <a href="#methodology" class="nav-link" data-tab="methodology">🔬 Methodology & SEC Sources</a>
+      <a href="#downloads" class="nav-link" data-tab="downloads">💻 Source Code & Downloads</a>
+    </nav>
+  </header>
+
+  <!-- Main Container -->
+  <main class="main-content">
+    
+    <div id="app-loading"></div>
+
+    <!-- Hero Banner -->
+    <section class="hero-banner">
+      <div class="hero-info">
+        <h1 id="hero-title">Apple Inc. <span class="ticker-tag" style="color:var(--apple-color)">AAPL</span></h1>
+        <p class="hero-desc" id="hero-desc">Global technology leader in mobile communication, personal computing, and digital services.</p>
+      </div>
+      <div class="hero-meta" id="hero-meta">
+        <!-- Dynamically rendered by app.js -->
+      </div>
+    </section>
+
+    <!-- SECTION 1: OVERVIEW -->
+    <section id="section-overview" class="content-section active">
+      <!-- 4 Top Stat Cards -->
+      <div class="grid-cards" id="overview-cards">
+        <!-- Rendered by app.js -->
+      </div>
+
+      <!-- Overview Highlights -->
+      <div class="section-card">
+        <div class="section-header">
+          <div>
+            <div class="section-title">Longitudinal Performance & Disclosures (FY2016 - FY2025)</div>
+            <div class="section-subtitle">Ten-year audited longitudinal metrics from primary SEC Form 10-K filings and Loughran-McDonald dictionary parsing.</div>
+          </div>
+        </div>
+        <p style="color:var(--text-muted); line-height:1.7; margin-bottom:1rem;">
+          This interactive analytical platform integrates primary financial statements (Item 8) with computational linguistics applied to Management's Discussion and Analysis (Item 7). Over the decade spanning FY2016 through FY2025, Apple Inc. (AAPL) and Advanced Micro Devices (AMD) exhibit starkly contrasting business models, capital allocation strategies, and narrative disclosure conventions.
+        </p>
+        <div class="callout info">
+          <h4>Platform Highlights</h4>
+          <ul style="margin-left: 1.25rem; line-height: 1.6; font-size: 0.9rem;">
+            <li><strong>Verified Primary Data</strong>: 100% of financial statement line items were programmatically scraped directly from SEC EDGAR 10-K HTML filings and reconciled against comparative audited prior-year figures.</li>
+            <li><strong>Loughran-McDonald Master Dictionary (March 2026)</strong>: Evaluates financial narrative tone using the authoritative domain-specific accounting sentiment classification, parsing word frequency distributions.</li>
+            <li><strong>Split-Adjusted Equity Valuation</strong>: Daily closing prices reflect historical split adjustments (including Apple's 4-for-1 split on August 31, 2020) aligned to the exact trading day on or before each fiscal year-end balance sheet date.</li>
+            <li><strong>Dual-Axis Comparative Visualizations</strong>: Real-time interactive charts illustrating equity co-movement vs. legal narrative conservatism.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 2: FINANCIAL STATEMENTS -->
+    <section id="section-financials" class="content-section">
+      <div class="section-card">
+        <div class="section-header">
+          <div>
+            <div class="section-title" id="statement-title-text">Income Statement (FY2016 - FY2025)</div>
+            <div class="section-subtitle">Programmatically parsed from SEC EDGAR Form 10-K Item 8 | Amounts in Millions of USD ($M)</div>
+          </div>
+          <!-- Statement Picker -->
+          <div class="button-group">
+            <button class="btn-ctrl btn-statement active" data-statement="is">Income Statement</button>
+            <button class="btn-ctrl btn-statement" data-statement="bs">Balance Sheet</button>
+            <button class="btn-ctrl btn-statement" data-statement="cf">Cash Flows</button>
+          </div>
+        </div>
+
+        <div class="table-responsive" id="statements-table-container">
+          <!-- Rendered by app.js -->
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 3: FINANCIAL RATIOS -->
+    <section id="section-ratios" class="content-section">
+      <div class="section-card">
+        <div class="section-header">
+          <div>
+            <div class="section-title">Financial Ratio Analysis (FY2016 - FY2025)</div>
+            <div class="section-subtitle">Evaluating Liquidity, Solvency, Efficiency, and Profitability with Comparative 10-Year Baselines</div>
+          </div>
+        </div>
+
+        <!-- 4 Ratio Cards -->
+        <div class="ratio-cards-grid" id="ratio-cards-container">
+          <!-- Rendered by app.js -->
+        </div>
+
+        <!-- Ratio Trend Chart -->
+        <div style="margin: 2rem 0;">
+          <h3 style="font-size:1.1rem; color:#fff; margin-bottom:0.5rem;">Interactive 10-Year Ratio Trajectories</h3>
+          <div class="chart-container">
+            <canvas id="chart-ratios"></canvas>
+          </div>
+        </div>
+
+        <!-- Ratios Table -->
+        <h3 style="font-size:1.1rem; color:#fff; margin-top:2rem; margin-bottom:0.5rem;">Detailed 10-Year Ratio Table</h3>
+        <div class="table-responsive" id="ratios-table-container">
+          <!-- Rendered by app.js -->
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 4: MD&A SENTIMENT -->
+    <section id="section-sentiment" class="content-section">
+      <div class="section-card">
+        <div class="section-header">
+          <div>
+            <div class="section-title">MD&A Sentiment Analysis (Loughran-McDonald)</div>
+            <div class="section-subtitle">Computational linguistic parsing of Item 7 narrative disclosures across ten annual 10-K filings.</div>
+          </div>
+        </div>
+
+        <div id="outlier-audit-card">
+          <!-- Rendered by app.js -->
+        </div>
+
+        <h3 style="font-size:1.1rem; color:#fff; margin-top:1.5rem; margin-bottom:0.5rem;">10-Year Sentiment Summary Metrics</h3>
+        <div class="table-responsive" id="sentiment-table-container">
+          <!-- Rendered by app.js -->
+        </div>
+
+        <h3 style="font-size:1.1rem; color:#fff; margin-top:2rem; margin-bottom:0.5rem;">Top Matched Loughran-McDonald Dictionary Words</h3>
+        <p style="color:var(--text-muted); font-size:0.85rem; margin-bottom:1rem;">Parsed occurrences of financial positive and negative word tokens extracted from management narrative.</p>
+        <div class="table-responsive" id="matched-words-container" style="max-height: 400px; overflow-y: auto;">
+          <!-- Rendered by app.js -->
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 5: STOCK PRICE VS SENTIMENT -->
+    <section id="section-price-sentiment" class="content-section">
+      <div class="section-card">
+        <div class="section-header">
+          <div>
+            <div class="section-title">Stock Price vs. MD&A Sentiment Ratio (FY2016 - FY2025)</div>
+            <div class="section-subtitle">Dual-Axis Co-Movement Visualization: Split-Adjusted Closing Stock Price ($) vs. Positive/Negative Sentiment Ratio</div>
+          </div>
+        </div>
+
+        <!-- Interactive Dual-Axis Chart -->
+        <div class="chart-container">
+          <canvas id="chart-price-sentiment"></canvas>
+        </div>
+
+        <!-- Causation Disclaimer -->
+        <div class="callout disclaimer">
+          <h4>CAUSATION DISCLAIMER & METHODOLOGY NOTE</h4>
+          <p>
+            Statistical correlation or co-movement between historical stock prices and MD&A linguistic sentiment <strong>DOES NOT prove causation</strong>. 
+            Management narrative in SEC Form 10-K Item 7 reflects backward-looking explanations of past operational results alongside conservative, forward-looking risk management disclosures. Equity closing prices reflect discounted expected future cash flows, macroeconomic interest rate cycles, industry competition, and broad market sentiment. Co-movement indicates informational alignment, not direct causal dependency.
+          </p>
+        </div>
+
+        <!-- 10-Year Detailed Alignment Table -->
+        <h3 style="font-size:1.1rem; color:#fff; margin-top:2rem; margin-bottom:0.5rem;">10-Year Alignment Table & Calendar Timing Notes</h3>
+        <div class="table-responsive" id="price-sentiment-table-container">
+          <!-- Rendered by app.js -->
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 5B: PRIMARY COMPARISON: APPLE VS AMD -->
+    <section id="section-aapl-amd" class="content-section">
+      <div class="section-card">
+        <div class="section-header">
+          <div>
+            <div class="section-title">Primary Registrant Comparison: Apple Inc. (AAPL) vs. AMD (AMD)</div>
+            <div class="section-subtitle">Dedicated side-by-side longitudinal analysis comparing the two primary assignment study companies across financial performance, ratios, MD&A sentiment, and stock valuation (FY2016–FY2025).</div>
+          </div>
+        </div>
+
+        <!-- Interactive Comparison Toolbar -->
+        <div class="comp-toolbar">
+          <!-- Active Companies Display -->
+          <div class="toolbar-group">
+            <span class="toolbar-label">Primary Registrants:</span>
+            <span class="stat-badge" style="background:rgba(56, 189, 248, 0.15); color:var(--apple-color); font-weight:600; font-size:0.85rem; padding:0.35rem 0.65rem;">🍏 Apple (AAPL)</span>
+            <span class="stat-badge" style="background:rgba(239, 68, 68, 0.15); color:var(--amd-color); font-weight:600; font-size:0.85rem; padding:0.35rem 0.65rem;">⚡ AMD (AMD)</span>
+          </div>
+
+          <!-- Metric Selector -->
+          <div class="toolbar-group">
+            <span class="toolbar-label">Financial Metric:</span>
+            <select id="select-pair-metric" class="metric-select">
+              <optgroup label="Financial Statements ($M)">
+                <option value="net_sales_m" selected>Total Net Sales / Revenue ($M)</option>
+                <option value="net_income_m">Net Income ($M)</option>
+                <option value="revenue_growth_pct">Revenue Growth YoY (%)</option>
+                <option value="net_income_growth_pct">Net Income Growth YoY (%)</option>
+                <option value="total_assets_m">Total Assets ($M)</option>
+                <option value="operating_cf_m">Cash from Operations ($M)</option>
+              </optgroup>
+              <optgroup label="Financial Ratios">
+                <option value="net_profit_margin">Net Profit Margin (%) [Profitability]</option>
+                <option value="current_ratio">Current Ratio (x) [Liquidity]</option>
+                <option value="liabilities_to_assets">Liabilities-to-Assets Ratio (%) [Solvency]</option>
+                <option value="asset_turnover">Total Asset Turnover (x) [Efficiency]</option>
+              </optgroup>
+              <optgroup label="MD&A Linguistic Sentiment">
+                <option value="pn_ratio">MD&A Positive / Negative Ratio (x)</option>
+                <option value="net_sentiment_k">Net Sentiment per 1,000 Words</option>
+                <option value="total_word_count">Total MD&A Word Count</option>
+                <option value="pos_words">Positive Word Count</option>
+                <option value="neg_words">Negative Word Count</option>
+              </optgroup>
+              <optgroup label="Stock Market Valuation">
+                <option value="split_adj_close">Split-Adjusted Closing Stock Price ($)</option>
+                <option value="indexed_price">Normalized Stock Price (FY2016 = 100.0)</option>
+              </optgroup>
+            </select>
+          </div>
+
+          <!-- Year Range -->
+          <div class="toolbar-group">
+            <span class="toolbar-label">Period:</span>
+            <select id="select-pair-year-start" class="metric-select" style="min-width:90px;"></select>
+            <span style="color:var(--text-dim);">to</span>
+            <select id="select-pair-year-end" class="metric-select" style="min-width:90px;"></select>
+          </div>
+
+          <!-- Chart Controls & Exports -->
+          <div class="toolbar-group">
+            <div class="button-group">
+              <button class="btn-ctrl active" id="btn-pair-type-line">📈 Line</button>
+              <button class="btn-ctrl" id="btn-pair-type-bar">📊 Bar</button>
+            </div>
+            <button class="btn-export" id="btn-export-pair-png" title="Save Chart Image">📥 PNG</button>
+            <button class="btn-export" id="btn-export-pair-csv" title="Export Table as CSV">📊 CSV</button>
+          </div>
+        </div>
+
+        <!-- Metric Definition Card -->
+        <div id="metric-pair-desc-card" class="metric-desc-card">
+          <!-- Dynamically populated by app.js -->
+        </div>
+
+        <!-- Dynamic Pair Comparison Canvas Chart -->
+        <div class="chart-container" style="height: 440px;">
+          <canvas id="chart-pair-comparison"></canvas>
+        </div>
+
+        <!-- Side-by-Side Detailed Statistics Table -->
+        <h3 style="font-size:1.1rem; color:#fff; margin-top:2rem; margin-bottom:0.5rem;" id="pair-table-title">Apple vs. AMD Longitudinal Comparison Table</h3>
+        <div class="table-responsive" id="pair-table-container">
+          <!-- Rendered by app.js -->
+        </div>
+
+        <!-- Normalized Price vs Sentiment Trajectory Chart for Apple & AMD -->
+        <div style="margin: 2.5rem 0 1rem 0;">
+          <h3 style="font-size:1.1rem; color:#fff; margin-bottom:0.5rem;">Normalized Equity Growth (FY2016 = 100.0) vs. Scaled Sentiment Ratio</h3>
+          <p style="color:var(--text-muted); font-size:0.85rem; margin-bottom:1rem;">Direct comparison of Apple's legal conservatism divergence vs. AMD's operational turnaround co-movement.</p>
+          <div class="chart-container">
+            <canvas id="chart-pair-trajectory"></canvas>
+          </div>
+        </div>
+
+        <!-- Comparative Insights Cards -->
+        <div class="ratio-cards-grid" style="margin-top:2rem;">
+          <div class="ratio-card">
+            <div class="ratio-name" style="color:var(--apple-color)">Apple (AAPL): Legal Conservatism Divergence</div>
+            <p style="color:var(--text-muted); font-size:0.85rem; line-height:1.6; margin-top:0.5rem;">
+              Apple experienced phenomenal valuation expansion (+806.6% from $28.18 to $255.46). However, Apple's MD&A P/N ratio remained strictly conservative, averaging <strong>0.28x</strong> (aside from the FY2021 pandemic peak of 0.93x). This reflects institutional legal boilerplate and standardized risk disclosures that suppress narrative tone despite massive market capital appreciation.
+            </p>
+          </div>
+          <div class="ratio-card">
+            <div class="ratio-name" style="color:var(--amd-color)">AMD (AMD): Operational Turnaround Co-Movement</div>
+            <p style="color:var(--text-muted); font-size:0.85rem; line-height:1.6; margin-top:0.5rem;">
+              AMD executed one of the most remarkable operational turnarounds in semiconductor history, with share price multiplying <strong>+1,795.9%</strong> from $11.34 to $214.99. In stark contrast to Apple, AMD's narrative sentiment strongly tracked this transformation: P/N ratio expanded from <strong>0.28x</strong> (FY2016 net loss) to a peak of <strong>1.36x</strong> (FY2020 Zen 3 launch), demonstrating genuine co-movement during multi-year operational turnaround.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 6: CROSS-COMPANY & MULTI-COMPANY COMPARISON -->
+    <section id="section-cross-company" class="content-section">
+      <div class="section-card">
+        <div class="section-header">
+          <div>
+            <div class="section-title" id="multi-comp-title">Three-Company Comparative Analytics Dashboard</div>
+            <div class="section-subtitle" id="multi-comp-subtitle">Compare Apple (AAPL), AMD (AMD), and Microsoft (MSFT) across longitudinal financial statements, financial ratios, and split-adjusted equity performance (FY2016–FY2025).</div>
+          </div>
+        </div>
+
+        <!-- Interactive Comparison Toolbar -->
+        <div class="comp-toolbar">
+          <!-- Active Companies Toggles -->
+          <div class="toolbar-group">
+            <span class="toolbar-label">Active Companies:</span>
+            <label class="checkbox-chip">
+              <input type="checkbox" id="chk-comp-aapl" checked>
+              <span style="color:var(--apple-color)">🍏 Apple (AAPL)</span>
+            </label>
+            <label class="checkbox-chip">
+              <input type="checkbox" id="chk-comp-amd" checked>
+              <span style="color:var(--amd-color)">⚡ AMD (AMD)</span>
+            </label>
+            <label class="checkbox-chip" id="chip-comp-custom">
+              <input type="checkbox" id="chk-comp-custom" checked>
+              <span id="label-comp-custom" style="color:var(--accent-emerald)">🏢 Microsoft (MSFT)</span>
+            </label>
+          </div>
+
+          <!-- Metric Selector -->
+          <div class="toolbar-group">
+            <span class="toolbar-label">Financial Metric:</span>
+            <select id="select-comp-metric" class="metric-select">
+              <optgroup label="Financial Statements ($M)">
+                <option value="net_sales_m" selected>Total Net Sales / Revenue ($M)</option>
+                <option value="net_income_m">Net Income ($M)</option>
+                <option value="revenue_growth_pct">Revenue Growth YoY (%)</option>
+                <option value="net_income_growth_pct">Net Income Growth YoY (%)</option>
+                <option value="total_assets_m">Total Assets ($M)</option>
+                <option value="operating_cf_m">Cash from Operations ($M)</option>
+              </optgroup>
+              <optgroup label="Financial Ratios">
+                <option value="net_profit_margin">Net Profit Margin (%) [Profitability]</option>
+                <option value="current_ratio">Current Ratio (x) [Liquidity]</option>
+                <option value="liabilities_to_assets">Liabilities-to-Assets Ratio (%) [Solvency]</option>
+                <option value="asset_turnover">Total Asset Turnover (x) [Efficiency]</option>
+              </optgroup>
+              <optgroup label="MD&A Linguistic Sentiment">
+                <option value="pn_ratio">MD&A Positive / Negative Ratio (x)</option>
+                <option value="net_sentiment_k">Net Sentiment per 1,000 Words</option>
+                <option value="total_word_count">Total MD&A Word Count</option>
+                <option value="pos_words">Positive Word Count</option>
+                <option value="neg_words">Negative Word Count</option>
+              </optgroup>
+              <optgroup label="Stock Market Valuation">
+                <option value="split_adj_close">Split-Adjusted Closing Stock Price ($)</option>
+                <option value="indexed_price">Normalized Stock Price (FY2016 = 100.0)</option>
+              </optgroup>
+            </select>
+          </div>
+
+          <!-- Year Range -->
+          <div class="toolbar-group">
+            <span class="toolbar-label">Period:</span>
+            <select id="select-year-start" class="metric-select" style="min-width:90px;"></select>
+            <span style="color:var(--text-dim);">to</span>
+            <select id="select-year-end" class="metric-select" style="min-width:90px;"></select>
+          </div>
+
+          <!-- Chart Controls & Exports -->
+          <div class="toolbar-group">
+            <div class="button-group">
+              <button class="btn-ctrl active" id="btn-chart-type-line">📈 Line</button>
+              <button class="btn-ctrl" id="btn-chart-type-bar">📊 Bar</button>
+            </div>
+            <button class="btn-export" id="btn-export-chart-png" title="Save Chart Image">📥 PNG</button>
+            <button class="btn-export" id="btn-export-comp-csv" title="Export Table as CSV">📊 CSV</button>
+          </div>
+        </div>
+
+        <!-- Metric Definition Card -->
+        <div id="metric-desc-card" class="metric-desc-card">
+          <!-- Dynamically populated by app.js -->
+        </div>
+
+        <!-- Dynamic Multi-Company Canvas Chart -->
+        <div class="chart-container" style="height: 440px;">
+          <canvas id="chart-multi-comparison"></canvas>
+        </div>
+
+        <!-- Side-by-Side Detailed Statistics Table -->
+        <h3 style="font-size:1.1rem; color:#fff; margin-top:2rem; margin-bottom:0.5rem;" id="multi-comp-table-title">Longitudinal Side-by-Side Comparison Table</h3>
+        <div class="table-responsive" id="multi-comp-table-container">
+          <!-- Rendered by app.js -->
+        </div>
+
+        <!-- Original Normalized Price vs Sentiment Trajectory Chart -->
+        <div style="margin: 2.5rem 0 1rem 0;">
+          <h3 style="font-size:1.1rem; color:#fff; margin-bottom:0.5rem;">Normalized Equity Growth (FY2016 = 100.0) vs. Scaled Sentiment Ratio</h3>
+          <p style="color:var(--text-muted); font-size:0.85rem; margin-bottom:1rem;">Normalized valuation trajectories illustrating equity growth relative to narrative tone expansion.</p>
+          <div class="chart-container">
+            <canvas id="chart-cross-company"></canvas>
+          </div>
+        </div>
+
+        <!-- Comparative Insights Cards -->
+        <div class="ratio-cards-grid" style="margin-top:2rem;" id="comp-insights-grid">
+          <div class="ratio-card">
+            <div class="ratio-name" style="color:var(--apple-color)">Apple (AAPL): Legal Conservatism Divergence</div>
+            <p style="color:var(--text-muted); font-size:0.85rem; line-height:1.6; margin-top:0.5rem;">
+              Apple experienced phenomenal valuation expansion (+806.6% from $28.18 to $255.46). However, Apple's MD&A P/N ratio remained strictly conservative, averaging <strong>0.28x</strong> (aside from the FY2021 pandemic peak of 0.93x). This reflects institutional legal boilerplate and standardized risk disclosures that suppress narrative tone despite massive market capital appreciation.
+            </p>
+          </div>
+          <div class="ratio-card">
+            <div class="ratio-name" style="color:var(--amd-color)">AMD (AMD): Operational Turnaround Co-Movement</div>
+            <p style="color:var(--text-muted); font-size:0.85rem; line-height:1.6; margin-top:0.5rem;">
+              AMD executed one of the most remarkable operational turnarounds in semiconductor history, with share price multiplying <strong>+1,795.9%</strong> from $11.34 to $214.99. In stark contrast to Apple, AMD's narrative sentiment strongly tracked this transformation: P/N ratio expanded from <strong>0.28x</strong> (FY2016 net loss) to a peak of <strong>1.36x</strong> (FY2020 Zen 3 launch), demonstrating genuine co-movement during multi-year operational turnaround.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 7: PEER BENCHMARK: MICROSOFT CORP -->
+    <section id="section-add-company" class="content-section">
+      <div class="section-card">
+        <div class="section-header">
+          <div>
+            <div class="section-title">Peer Benchmark Analysis: Microsoft Corporation (MSFT)</div>
+            <div class="section-subtitle">Longitudinal 10-year audited US-GAAP financial statements, balance sheet reconciliation, and ratio benchmarking (FY2016–FY2025).</div>
+          </div>
+        </div>
+
+        <div class="search-card" style="border-color: rgba(16, 185, 129, 0.3);">
+          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem; margin-bottom:1.5rem;">
+            <div>
+              <div style="display:flex; align-items:center; gap:0.75rem;">
+                <h3 style="color:#fff; font-size:1.35rem; margin:0;">Microsoft Corporation</h3>
+                <span class="ticker-tag" style="background:var(--accent-emerald); color:#0b1120; font-weight:700;">MSFT</span>
+                <span class="stat-badge green">SEC CIK: 0000789019</span>
+              </div>
+              <p style="color:var(--text-muted); font-size:0.9rem; margin-top:0.5rem; line-height:1.6;">
+                Global leader in enterprise cloud computing (Azure), enterprise productivity software (Office 365 / Microsoft 365), server products, and gaming. Included as the authoritative enterprise technology peer benchmark against consumer hardware leader Apple Inc. (AAPL) and semiconductor turnaround leader Advanced Micro Devices (AMD).
+              </p>
+            </div>
+            <div style="display:flex; gap:0.75rem; flex-wrap:wrap;">
+              <button class="btn-ctrl active" id="btn-jump-view-msft" style="background:var(--accent-emerald); color:#0b1120; font-weight:600;">🏢 View Microsoft Financials</button>
+              <button class="btn-ctrl active" id="btn-jump-compare-msft" style="background:#a855f7; color:#fff; font-weight:600;">⚖️ Three-Company Comparison</button>
+            </div>
+          </div>
+
+          <!-- Audited 10-Year Summary Grid -->
+          <div class="ratio-cards-grid" style="margin-bottom:1.5rem;">
+            <div class="ratio-card" style="background:rgba(15, 23, 42, 0.6);">
+              <div class="ratio-name"><span style="color:var(--accent-emerald)">FY2016 Baseline Performance</span></div>
+              <div style="margin-top:0.5rem; font-size:0.85rem; color:var(--text-muted); line-height:1.6;">
+                <div><strong>Total Net Revenue:</strong> $85,320.0M</div>
+                <div><strong>Net Income:</strong> $16,798.0M</div>
+                <div><strong>Total Assets:</strong> $193,694.0M</div>
+                <div><strong>Stockholders' Equity:</strong> $71,997.0M</div>
+                <div><strong>Balance Sheet Diff:</strong> $0.0M (Reconciled)</div>
+              </div>
+            </div>
+
+            <div class="ratio-card" style="background:rgba(15, 23, 42, 0.6);">
+              <div class="ratio-name"><span style="color:var(--accent-emerald)">FY2025 Current Performance</span></div>
+              <div style="margin-top:0.5rem; font-size:0.85rem; color:var(--text-muted); line-height:1.6;">
+                <div><strong>Total Net Revenue:</strong> $281,724.0M (+230.2%)</div>
+                <div><strong>Net Income:</strong> $101,832.0M (+506.2%)</div>
+                <div><strong>Total Assets:</strong> $619,003.0M (+219.6%)</div>
+                <div><strong>Stockholders' Equity:</strong> $343,479.0M (+377.1%)</div>
+                <div><strong>Balance Sheet Diff:</strong> $0.0M (Reconciled)</div>
+              </div>
+            </div>
+
+            <div class="ratio-card" style="background:rgba(15, 23, 42, 0.6);">
+              <div class="ratio-name"><span style="color:var(--accent-emerald)">10-Year Valuation & Multiples</span></div>
+              <div style="margin-top:0.5rem; font-size:0.85rem; color:var(--text-muted); line-height:1.6;">
+                <div><strong>FY16 Split-Adj Close:</strong> $51.17</div>
+                <div><strong>FY25 Split-Adj Close:</strong> $497.80</div>
+                <div><strong>10-Yr Equity Return:</strong> +872.8%</div>
+                <div><strong>10-Yr Avg Net Margin:</strong> 29.8%</div>
+                <div><strong>10-Yr Avg Current Ratio:</strong> 2.06x</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Academic & Audit Disclosure -->
+          <div class="callout info" style="border-color:var(--accent-emerald); background:rgba(16, 185, 129, 0.05);">
+            <h4 style="color:var(--accent-emerald);">Academic Methodology & Disclosure Note</h4>
+            <p style="font-size:0.88rem; line-height:1.6; color:var(--text-muted);">
+              <strong>Primary vs. Peer Registrant Scope:</strong> Apple Inc. (AAPL) and Advanced Micro Devices (AMD) serve as the primary research subjects with full dual-axis linguistic analysis integrating Loughran-McDonald Item 7 MD&A sentiment scores against stock valuation movements. Microsoft Corporation (MSFT) is incorporated as the audited 10-year US-GAAP financial and ratio benchmark. Because Item 7 narrative extraction for Microsoft's legacy Form 10-K filings exhibited format variances across SEC EDGAR submission accessions, MD&A sentiment metrics for MSFT are designated as unavailable (<code>—</code>) in accordance with accounting conservatism standards rather than displaying unverified counts.
+            </p>
+          </div>
+        </div>
+
+        <!-- Reliability & Accounting Standards -->
+        <div class="callout info">
+          <h4>Reliability & Accounting Integrity Standards</h4>
+          <ul style="margin-left: 1.25rem; line-height: 1.6; font-size: 0.9rem;">
+            <li><strong>Official SEC Data</strong>: Audited financial figures are retrieved directly from official SEC XBRL company facts filed under US-GAAP taxonomy.</li>
+            <li><strong>Period-End Matching</strong>: Financial statement line items are matched strictly to the annual reporting period end date (June 30) with annual durations (300–420 days), preventing prior-year comparative row misattribution.</li>
+            <li><strong>Balance Sheet Identity</strong>: Total Assets equals Total Liabilities plus Stockholders' Equity across all 10 fiscal periods (discrepancy = $0.0M).</li>
+            <li><strong>Zero Server Latency</strong>: Precomputed and bundled for 100% offline static compatibility on GitHub Pages.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 7: METHODOLOGY & SEC SOURCES -->
+    <section id="section-methodology" class="content-section">
+      <div class="section-card">
+        <div class="section-header">
+          <div>
+            <div class="section-title">Methodology & SEC Data Architecture</div>
+            <div class="section-subtitle">Technical workflow, algorithms, dictionary categorization, and data normalization standards.</div>
+          </div>
+        </div>
+
+        <div style="color:var(--text-muted); line-height:1.7;">
+          <h3 style="color:#fff; font-size:1.15rem; margin-top:1.5rem; margin-bottom:0.5rem;">1. SEC EDGAR Programmatic Extraction</h3>
+          <p>
+            The backend engine (<a href="#downloads" style="color:var(--accent-blue)"><code>sec_downloader.py</code></a>) interfaces directly with the SEC EDGAR Submissions API. All HTTP requests adhere to SEC access policies: User-Agent identification containing contact email and name, strictly throttled to fewer than 10 requests per second. Filings metadata is fetched to discover the 10 most recent primary Form 10-K filings for CIK 0000320193 (Apple) and CIK 0000002488 (AMD).
+          </p>
+
+          <h3 style="color:#fff; font-size:1.15rem; margin-top:1.5rem; margin-bottom:0.5rem;">2. Item 7 (MD&A) Regex Extraction</h3>
+          <p>
+            HTML filings are parsed using regular expression state machines to capture the narrative text between Item 7 (Management's Discussion and Analysis of Financial Condition and Results of Operations) and Item 7A (Quantitative and Qualitative Disclosures About Market Risk). Embedded HTML tags, XML tags, CSS styles, and XBRL metadata are stripped to leave clean plain text.
+          </p>
+
+          <h3 style="color:#fff; font-size:1.15rem; margin-top:1.5rem; margin-bottom:0.5rem;">3. Loughran-McDonald Financial Sentiment Dictionary</h3>
+          <p>
+            Unlike general-purpose sentiment lexicons (which misclassify standard financial terms such as "tax", "cost", or "liability" as negative), the Loughran-McDonald Master Dictionary (March 2026 CSV) is calibrated specifically for accounting disclosures. The sentiment classification calculates:
+          </p>
+          <div class="ratio-formula" style="margin: 0.75rem 0;">
+            Positive / Negative Sentiment Ratio = Total Matched Positive Words / Total Matched Negative Words<br>
+            Net Sentiment per 1,000 Words = [(Total Positive Words - Total Negative Words) / Total MD&A Words] × 1,000
+          </div>
+
+          <h3 style="color:#fff; font-size:1.15rem; margin-top:1.5rem; margin-bottom:0.5rem;">4. Stock Price Split Adjustments & Calendar Rollbacks</h3>
+          <p>
+            Stock closing prices are aligned with the exact fiscal year-end balance sheet dates. When a fiscal year-end falls on a non-trading weekend or holiday (e.g. Apple's last Saturday of September or AMD's Christmas Eve early closure), the algorithm automatically rolls back to the immediate preceding market trading day. Prices are split-adjusted to account for stock splits, most notably Apple's 4-for-1 split executed on August 31, 2020.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 8: SOURCE CODE & DOWNLOADS -->
+    <section id="section-downloads" class="content-section">
+      <div class="section-card">
+        <div class="section-header">
+          <div>
+            <div class="section-title">Verified Analytical Excel Workbooks & Source Code</div>
+            <div class="section-subtitle">Download the exact verified Excel workbooks containing primary financial statements, live formulas, and sentiment metrics.</div>
+          </div>
+        </div>
+
+        <div class="callout info">
+          <h4>Architecture Note: Static GitHub Pages vs. Local Python CLI</h4>
+          <p>
+            This website is hosted statically via <strong>GitHub Pages</strong>. GitHub Pages serves precomputed, audited analytical datasets for Apple (AAPL) and AMD across FY2016–FY2025 without requiring a server backend. 
+            To run live SEC extraction or analyze new companies, execute the Python command-line engine (<code>sec_downloader.py</code>) locally, or deploy it as a containerized web service.
+          </p>
+        </div>
+
+        <h3 style="font-size:1.1rem; color:#fff; margin-top:1.5rem; margin-bottom:0.5rem;">Apple Inc. (AAPL) Verified Workbooks</h3>
+        <div class="download-grid">
+          <div class="download-card">
+            <div>
+              <div class="file-name">AAPL_financials.xlsx</div>
+              <div class="file-desc">Primary Financial Statements (Income Statement, Balance Sheet, Cash Flows), Stock Prices, and Financial Ratios with live formulas.</div>
+            </div>
+            <a href="downloads/AAPL_financials.xlsx" class="btn-download" download>📥 Download Financials (.xlsx)</a>
+          </div>
+
+          <div class="download-card">
+            <div>
+              <div class="file-name">AAPL_sentiment.xlsx</div>
+              <div class="file-desc">Loughran-McDonald MD&A Sentiment Summary and frequency table of all matched positive and negative dictionary words.</div>
+            </div>
+            <a href="downloads/AAPL_sentiment.xlsx" class="btn-download" download>📥 Download Sentiment (.xlsx)</a>
+          </div>
+
+          <div class="download-card">
+            <div>
+              <div class="file-name">AAPL_financial_sentiment_analysis.xlsx</div>
+              <div class="file-desc">Integrated Yearly Comparison, 4 Trend Analysis charts, and verified dual-axis Price vs Sentiment chart.</div>
+            </div>
+            <a href="downloads/AAPL_financial_sentiment_analysis.xlsx" class="btn-download" download>📥 Download Comparison (.xlsx)</a>
+          </div>
+        </div>
+
+        <h3 style="font-size:1.1rem; color:#fff; margin-top:2rem; margin-bottom:0.5rem;">Advanced Micro Devices (AMD) Verified Workbooks</h3>
+        <div class="download-grid">
+          <div class="download-card">
+            <div>
+              <div class="file-name">AMD_financials.xlsx</div>
+              <div class="file-desc">Primary Financial Statements, Split-Adjusted Stock Prices, and Financial Ratios with audited FY2015 comparative baseline.</div>
+            </div>
+            <a href="downloads/AMD_financials.xlsx" class="btn-download" download>📥 Download Financials (.xlsx)</a>
+          </div>
+
+          <div class="download-card">
+            <div>
+              <div class="file-name">AMD_sentiment.xlsx</div>
+              <div class="file-desc">Loughran-McDonald MD&A Sentiment Summary and matched positive/negative word tokens for AMD FY2016–FY2025.</div>
+            </div>
+            <a href="downloads/AMD_sentiment.xlsx" class="btn-download" download>📥 Download Sentiment (.xlsx)</a>
+          </div>
+
+          <div class="download-card">
+            <div>
+              <div class="file-name">AMD_financial_sentiment_analysis.xlsx</div>
+              <div class="file-desc">Integrated Yearly Comparison, Trend Analysis visualizations, and dual-axis Price vs Sentiment worksheet and chart.</div>
+            </div>
+            <a href="downloads/AMD_financial_sentiment_analysis.xlsx" class="btn-download" download>📥 Download Comparison (.xlsx)</a>
+          </div>
+        </div>
+
+        <h3 style="font-size:1.1rem; color:#fff; margin-top:2rem; margin-bottom:0.5rem;">Microsoft Corporation (MSFT) Verified Peer Dataset</h3>
+        <div class="download-grid">
+          <div class="download-card" style="border-color:rgba(16, 185, 129, 0.4);">
+            <div>
+              <div class="file-name" style="color:var(--accent-emerald);">msft_precomputed.json</div>
+              <div class="file-desc">Audited 10-year US-GAAP primary financial statements, balance sheet reconciliations, split-adjusted stock prices, and financial ratios for Microsoft (CIK: 0000789019).</div>
+            </div>
+            <a href="data/msft_precomputed.json" class="btn-download" download style="background:var(--accent-emerald); color:#0b1120;">📥 Download MSFT Data (.json)</a>
+          </div>
+        </div>
+
+        <h3 style="font-size:1.1rem; color:#fff; margin-top:2rem; margin-bottom:0.5rem;">Python Analytics Engine</h3>
+        <div class="download-grid">
+          <div class="download-card" style="border-color:var(--border-light);">
+            <div>
+              <div class="file-name">sec_downloader.py</div>
+              <div class="file-desc">Complete Python engine orchestrating SEC EDGAR downloading, regex MD&A extraction, financial parsing, sentiment analysis, and Excel export.</div>
+            </div>
+            <a href="downloads/sec_downloader.py" class="btn-download" download>🐍 Download Python Script (.py)</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Application Footer -->
+  <footer class="app-footer">
+    <div class="footer-content">
+      <div>
+        <p><strong>SEC Financial & Sentiment Analyzer</strong> | University of New Hampshire — Accounting Analytics (ACCT 4451)</p>
+        <p style="margin-top:0.25rem;">Academic project analyzing Apple Inc. (AAPL), Advanced Micro Devices (AMD), and Microsoft Corporation (MSFT) across FY2016–FY2025.</p>
+      </div>
+      <div>
+        <p>Data Sources: SEC EDGAR Form 10-K Filings | Loughran-McDonald Financial Dictionary (March 2026)</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="data/data_bundle.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
